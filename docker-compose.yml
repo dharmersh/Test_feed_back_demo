@@ -1,28 +1,24 @@
-version: '3.8'
+version: '3'
 
 services:
-  db:
-    image: postgres:13
-    container_name: commento_db
-    environment:
-      POSTGRES_DB: commento
-      POSTGRES_USER: commento
-      POSTGRES_PASSWORD: password
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: always
-
-  commento:
-    build: .
-    container_name: commento_app
+  server:
+    image: registry.gitlab.com/commento/commento:SET_VERSION
     ports:
-      - "8080:8080"
+      - 8080:8080
+    environment:
+      COMMENTO_ORIGIN: http://commento.example.com:8080
+      COMMENTO_PORT: 8080
+      COMMENTO_POSTGRES: postgres://postgres:postgres@db:5432/commento?sslmode=disable
     depends_on:
       - db
+  db:
+    image: postgres
     environment:
-      COMMENTO_ORIGIN: http://localhost:8080
-      COMMENTO_POSTGRES: postgres://commento:password@db:5432/commento
-      COMMENTO_FORBID_NEW_OWNERS: false
+      POSTGRES_DB: commento
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data_volume:/var/lib/postgresql/data
 
 volumes:
-  pgdata:
+  postgres_data_volume:
