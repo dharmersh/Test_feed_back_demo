@@ -1,8 +1,6 @@
 {
   "name": "Commento Feedback Demo",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "image": "mcr.microsoft.com/devcontainers/docker",
   "forwardPorts": [8080],
-  "postCreateCommand": "docker-compose up -d"
+  "postCreateCommand": "docker compose up -d"
 }
