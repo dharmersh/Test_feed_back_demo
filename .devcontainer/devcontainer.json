@@ -1,1 +1,8 @@
-
+{
+  "name": "Commento Feedback Demo",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [8080],
+  "postCreateCommand": "docker-compose up -d"
+}
